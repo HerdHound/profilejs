@@ -1,6 +1,7 @@
 {
   "name": "profilejs",
-  "version": "0.0.1",
+  "description": "V8 profiling for Express framework",
+  "version": "0.0.2",
   "homepage": "https://github.com/HerdHound/profilejs",
   "keywords": ["profiling"],
   "author": "Branko Vukelic <branko@herdhound.com>",
