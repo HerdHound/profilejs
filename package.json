@@ -1,7 +1,7 @@
 {
   "name": "profilejs",
   "version": "0.0.1",
-  "homepage": "https://github.com/HerdHound/profilejs"
+  "homepage": "https://github.com/HerdHound/profilejs",
   "keywords": ["profiling"],
   "author": "Branko Vukelic <branko@herdhound.com>",
   "main": "profilejs.js",
@@ -14,7 +14,7 @@
     "url": "https://HerdHound@github.com/HerdHound/profilejs.git"
   },
   "engines": {
-    "node": ">= 0.4.0"
+    "node": ">= 0.4.1 < 0.5.0"
   },
   "dependencies": {
     "v8-profiler": ">= 0.0.3"
