@@ -1,7 +1,7 @@
 Profilejs: Express V8 profiler middleware
 =========================================
 
-version: 0.0.3
+version: 0.0.4
 
 Copyright (c)2011, by Branko Vukelic <branko@herdhound.com>.
 
@@ -33,6 +33,18 @@ should keep that in mind before using. It has only been lightly tested on V8
 3.2.10.2 with Node 0.4.10, and v8-profiler 0.0.3. There are no guarantees
 Profilejs will run with either older or newer versions of the involved
 software.
+
+0.0.4
+-----
+
+Major change in 0.0.4 is that the dummy profiler no longer outputs anything to
+console, unlike in previous versions. The internal plumbing has been reworked
+to make the dummy profiler truly do nothing, so you'll no longer see any ouput
+from it. 
+
+The Profile object now has ``enabled`` property which enables or disables the
+actual profi-ling. It's the same as using dummy profiler, but on a per-profile
+basis.
 
 Installation
 ------------
