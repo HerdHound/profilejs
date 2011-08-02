@@ -67,12 +67,15 @@ You can start the profiler using the module's ``start()`` method:
     var profilejs = require('profilejs');
     profilejs.start();
 
-Start method takes a single boolean argument, which tells the profiler whether
-to log to standard output.
+Start method takes a single boolean argument, which enables (``start(true)``) 
+or disables (``start(false)``) the _silent mode_ which suppresses console
+output.
 
 To stop profiling requests, use the ``stop()`` method. The stop method doesn't
-actually stop Profilejs, but rather replaces the v8-profiler with a dummy
-profiler which doesn't do anything.
+actually stop the profiler, but disables it's profiling functionality. In case
+of profiler middleware, there is still a small overhead introduced by the part
+of code that checks if the profiler should run. If you care about this, you
+should probably remove the middleware completely.
 
 Adding the profiler middleware
 ------------------------------
