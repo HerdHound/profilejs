@@ -5,32 +5,47 @@
  * Copyright (c)2011, by Branko Vukelic <branko@herdhound.com>.
  * Some rights reserved. 
  * Licensed under MIT license.
-* 
+ * 
  */
 
-var VERSION='0.0.3';
+var VERSION='0.0.4';
 
 var Profile;
 var Profiler;
-var dummyProfiler = {
-  startProfiling: function() { return; },
-  stopProfiling: function() { return; }
-};
-var v8profiler = dummyProfiler; // disabled by default;
-var silentMode = false;
-
 var profile = exports;
+
+// Profiler object with binds to v8-profiler and performs the actual profiling
+//
+// @api private
+var profiler = {
+  silent: true,
+  profiler: null,
+  startProfiling: function(name) {
+    if (this.profiler) {
+      if (!this.silent) { console.log('PROF_START: ' + name); }
+      this.profiler.startProfiling(name);
+    }
+  },
+  stopProfiling: function(name, duration) {
+    if (this.profiler) {
+      this.profiler.stopProfiling(name);
+      if (!this.silent) {
+        console.log('PROF_STOP: ' + name + 
+                    ' (time: ' + duration + 'ms)');
+      }
+    }
+  }
+};
 
 // Switch to dummy profiler
 //
 // Replaces the V8 profiler with dummy profiler which does nothing.
 //
-// @param silent, run in silent mode (do not log to STDOUT)
 // @api public
-profile.stop = function(silent) {
-  silentMode = silent;
+profile.stop = function() {
   console.log('Switching to dummy profiler');
-  v8profiler = dummyProfiler;
+  profiler.silent = true;
+  profiler.profiler = null;
 };
 
 // Load the real profiler
@@ -40,9 +55,9 @@ profile.stop = function(silent) {
 // @param silent, run in silent mode (do not log to STDOUT)
 // @api public
 profile.start = function(silent) {
-  silentMode = silent;
   console.log('Loading real V8 profiler');
-  v8profiler = require('v8-profiler');
+  profiler.silent = silent === false ? false : true;
+  profiler.profiler = require('v8-profiler');
 };
 
 // Single profile object, used to record a profile of specified name
@@ -55,9 +70,9 @@ profile.start = function(silent) {
 // @api public
 profile.Profile = Profile = function(name) {
   if (name) {
-    this.profiler = v8profiler;
+    this.enabled = true;
   } else {
-    this.profiler = dummyProfiler;
+    this.enabled = false;
   }
   this.name = name;
   this.profile = null;
@@ -67,23 +82,20 @@ profile.Profile = Profile = function(name) {
 //
 // @api public
 Profile.prototype.start = function() {
-  if (!silentMode) {
-    console.log('PROF_START: ' + this.name);
+  if (this.enabled) {
+    this.startTime = Date.now();
+    profiler.startProfiling(this.name);
   }
-  this.startTime = Date.now();
-  this.profiler.startProfiling(this.name);
 };
 
 // End CPU profiling
 //
 // @api public
 Profile.prototype.stop = function() {
-  this.profile = this.profiler.stopProfiling(this.name);
-  this.stopTime = Date.now();
-  this.duration = this.stopTime - this.startTime;
-  if (!silentMode) {
-    console.log('PROF_STOP: ' + this.name + 
-                ' (time: ' + this.duration + 'ms)');
+  if (this.enabled) {
+    this.stopTime = Date.now();
+    this.duration = this.stopTime - this.startTime;
+    this.profile = profiler.stopProfiling(this.name, this.duration);
   }
 };
 
@@ -127,4 +139,4 @@ profile.profiler = function(req, res, next) {
   profiler.start();
 
   next();
-  };
+};
