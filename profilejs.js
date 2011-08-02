@@ -8,13 +8,13 @@
 * 
  */
 
-var VERSION='0.0.2';
+var VERSION='0.0.3';
 
 var Profile;
 var Profiler;
 var dummyProfiler = {
   startProfiling: function() { return; },
-  endProfiling: function() { return; }
+  stopProfiling: function() { return; }
 };
 var v8profiler = dummyProfiler; // disabled by default;
 var silentMode = false;
