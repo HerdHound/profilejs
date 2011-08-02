@@ -1,7 +1,7 @@
 Profilejs: Express V8 profiler middleware
 =========================================
 
-version: 0.0.2
+version: 0.0.3
 
 Copyright (c)2011, by Branko Vukelic <branko@herdhound.com>.
 
