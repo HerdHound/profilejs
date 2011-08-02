@@ -7,11 +7,14 @@ Copyright (c)2011, by Branko Vukelic <branko@herdhound.com>.
 Some rights reserved. 
 Licensed under MIT license (see LICENSE)
 
+Overview
+--------
+
 Profilejs is an [Express framework](http://www.expressjs.com/) middleware 
 that profiles request handlers using the 
 [V8 profiler](http://github.com/dannycoates/v8-profiler) by Danny Coates.
 
-The profiler is most useful when used in conjunction with 
+Profilejs is most useful when used in conjunction with 
 [node-inspector](http://github.com/dannycoates/node-inspector)
 where you can analyze the collected information from a graphical 
 in-browser interface.
