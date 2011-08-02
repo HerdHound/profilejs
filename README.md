@@ -4,8 +4,11 @@ Profilejs: Express V8 profiler middleware
 version: 0.0.2
 
 Copyright (c)2011, by Branko Vukelic <branko@herdhound.com>.
+
 Some rights reserved. 
-Licensed under MIT license (see LICENSE)
+
+Licensed under MIT license (see
+[LICENSE](https://raw.github.com/HerdHound/profilejs/master/LICENSE))
 
 Overview
 --------
